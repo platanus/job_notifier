@@ -1,5 +1,11 @@
 module JobNotifier
   class Job < ActiveRecord::Base
+    extend Enumerize
+
+    STATUSES = [:pending, :finished, :failed]
+
+    enumerize :status, in: STATUSES, default: :pending
+
     attr_accessor :decoded_identifier
 
     before_save do
