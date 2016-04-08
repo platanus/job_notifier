@@ -50,7 +50,7 @@ RSpec.describe JobNotifier::Notifier do
     context "with error feedback" do
       before do
         class ImageUploadJob < ActiveJob::Base
-          def perform_with_feedback(param1, param2)
+          def perform_with_feedback(_param1, _param2)
             raise JobNotifier::Error::Validation.new(error: "invalid photo url")
           end
         end
@@ -72,7 +72,7 @@ RSpec.describe JobNotifier::Notifier do
     context "with unexpected error" do
       before do
         class ImageUploadJob < ActiveJob::Base
-          def perform_with_feedback(param1, param2)
+          def perform_with_feedback(_param1, _param2)
             raise "unexpected error"
           end
         end
