@@ -18,13 +18,13 @@ module JobNotifier
 
       def save_error_feedback(error)
         on_job_ctx do |job|
-          job.update_column(:result, error.to_s)
+          job.update_columns(result: error.to_s, status: :failed)
         end
       end
 
       def save_success_feedback(data)
         on_job_ctx do |job|
-          job.update_column(:result, data.to_s)
+          job.update_columns(result: data.to_s, status: :finished)
         end
       end
 

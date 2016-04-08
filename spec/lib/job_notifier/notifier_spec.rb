@@ -42,7 +42,8 @@ RSpec.describe JobNotifier::Notifier do
       end
 
       it "sets success state" do
-        skip("use enumerize")
+        ImageUploadJob.perform_later("id", "param1", "param2")
+        expect(JobNotifier::Job.last.status).to eq("finished")
       end
     end
 
@@ -63,7 +64,8 @@ RSpec.describe JobNotifier::Notifier do
       end
 
       it "sets error state" do
-        skip("use enumerize")
+        ImageUploadJob.perform_later("id", "param1", "param2")
+        expect(JobNotifier::Job.last.status).to eq("failed")
       end
     end
 
@@ -82,7 +84,7 @@ RSpec.describe JobNotifier::Notifier do
         expect(JobNotifier::Job.count).to eq(1)
         job = JobNotifier::Job.last
         expect(job.result).to eq("unknown")
-        # TODO: check error status
+        expect(job.status).to eq("failed")
       end
     end
   end
