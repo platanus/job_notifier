@@ -92,7 +92,14 @@ RSpec.describe JobNotifier::Notifier do
   context "without defining perform_with_feedback" do
     before do
       class ImageUploadJob < ActiveJob::Base
+        def perform
+          # work here
+        end
       end
+    end
+
+    it "ignores notifier mixin" do
+      expect { ImageUploadJob.perform_later }.not_to raise_error
     end
   end
 end

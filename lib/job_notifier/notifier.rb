@@ -35,9 +35,11 @@ module JobNotifier
       end
 
       before_enqueue do |job|
-        identifier = job.arguments.first
-        raise JobNotifier::Error::InvalidIdentifier if identifier.blank?
-        JobNotifier::Job.create!(decoded_identifier: identifier)
+        if job.respond_to?(:perform_with_feedback)
+          identifier = job.arguments.first
+          raise JobNotifier::Error::InvalidIdentifier if identifier.blank?
+          JobNotifier::Job.create!(decoded_identifier: identifier)
+        end
       end
     end
   end
