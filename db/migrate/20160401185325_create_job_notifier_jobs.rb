@@ -5,6 +5,7 @@ class CreateJobNotifierJobs < ActiveRecord::Migration
       t.string :job_id, index: true
       t.string :status
       t.text :result
+      t.boolean :notified, default: false
 
       t.timestamps null: false
     end

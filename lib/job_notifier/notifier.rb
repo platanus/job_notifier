@@ -29,7 +29,7 @@ module JobNotifier
       end
 
       def on_job_ctx(&block)
-        job = JobNotifier::Job.find_by job_id: job_id
+        job = JobNotifier::Job.find_by(job_id: job_id)
         return unless job
         block.call(job)
       end

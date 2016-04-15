@@ -11,16 +11,20 @@ RSpec.describe JobNotifier::Notifier do
         change(JobNotifier::Job, :count).from(0).to(1))
     end
 
-    it "encodes job identifier" do
-      identifier = { email: "emilio@platan.us" }
-      ImageUploadJob.perform_later(identifier, "param1", "param2")
-      job = JobNotifier::Job.last
-      expect(job.identifier).to eq(Digest::MD5.hexdigest(identifier.to_s))
-    end
-
     it "raises error with no identifier" do
       expect { ImageUploadJob.perform_later }.to(
         raise_error(JobNotifier::Error::InvalidIdentifier))
+    end
+
+    context "with created job" do
+      before do
+        identifier = { email: "emilio@platan.us" }
+        ImageUploadJob.perform_later(identifier, "param1", "param2")
+        @job = JobNotifier::Job.all_by_identifier(Digest::MD5.hexdigest(identifier.to_s)).first
+      end
+
+      it { expect(@job.job_id).not_to be_nil }
+      it { expect(@job.notified).to be_falsey }
     end
   end
 

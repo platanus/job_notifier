@@ -23,5 +23,5 @@ function reqListener() {
 }
 
 function reqError(err) {
-  console.log('Fetch Error :-S', err);
+  console.error('error', err);
 }
