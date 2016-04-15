@@ -3,11 +3,22 @@ require "rails_helper"
 RSpec.describe JobNotifier::Notifier do
   before do
     Object.send(:remove_const, :ImageUploadJob) rescue nil
+    Object.send(:remove_const, :TestUser) rescue nil
+
+    class TestUser
+      include JobNotifier::Identifier
+      attr_accessor :email
+      indentify_by :email
+    end
+
+    tu = TestUser.new
+    tu.email = "emilio@platan.us"
+    @identifier = tu.job_identifier
   end
 
   def self.expect_job_creation
     it "creates new job" do
-      expect { ImageUploadJob.perform_later("id", "param1", "param2") }.to(
+      expect { ImageUploadJob.perform_later(@identifier, "param1", "param2") }.to(
         change(JobNotifier::Job, :count).from(0).to(1))
     end
 
@@ -18,14 +29,17 @@ RSpec.describe JobNotifier::Notifier do
 
     context "with created job" do
       before do
-        identifier = { email: "emilio@platan.us" }
-        ImageUploadJob.perform_later(identifier, "param1", "param2")
-        @job = JobNotifier::Job.where(identifier: Digest::MD5.hexdigest(identifier.to_s)).first
+        ImageUploadJob.perform_later(@identifier, "param1", "param2")
+        @job = job_by_identifier(@identifier)
       end
 
       it { expect(@job.job_id).not_to be_nil }
       it { expect(@job.notified).to be_falsey }
     end
+  end
+
+  def job_by_identifier(identifier)
+    JobNotifier::Job.where(identifier: identifier).first
   end
 
   context "defining perform_with_feedback" do
@@ -41,13 +55,13 @@ RSpec.describe JobNotifier::Notifier do
       expect_job_creation
 
       it "saves result" do
-        ImageUploadJob.perform_later("id", "param1", "param2")
-        expect(JobNotifier::Job.last.result).to eq("photo loaded! with param1 and param2")
+        ImageUploadJob.perform_later(@identifier, "param1", "param2")
+        expect(job_by_identifier(@identifier).result).to eq("photo loaded! with param1 and param2")
       end
 
       it "sets success state" do
-        ImageUploadJob.perform_later("id", "param1", "param2")
-        expect(JobNotifier::Job.last.status).to eq("finished")
+        ImageUploadJob.perform_later(@identifier, "param1", "param2")
+        expect(job_by_identifier(@identifier).status).to eq("finished")
       end
     end
 
@@ -63,13 +77,13 @@ RSpec.describe JobNotifier::Notifier do
       expect_job_creation
 
       it "saves error" do
-        ImageUploadJob.perform_later("id", "param1", "param2")
-        expect(JobNotifier::Job.last.result).to eq("{:error=>\"invalid photo url\"}")
+        ImageUploadJob.perform_later(@identifier, "param1", "param2")
+        expect(job_by_identifier(@identifier).result).to eq("{:error=>\"invalid photo url\"}")
       end
 
       it "sets error state" do
-        ImageUploadJob.perform_later("id", "param1", "param2")
-        expect(JobNotifier::Job.last.status).to eq("failed")
+        ImageUploadJob.perform_later(@identifier, "param1", "param2")
+        expect(job_by_identifier(@identifier).status).to eq("failed")
       end
     end
 
@@ -83,10 +97,10 @@ RSpec.describe JobNotifier::Notifier do
       end
 
       it "creates new job but throw the exception" do
-        expect { ImageUploadJob.perform_later("id", "param1", "param2") }.to(
+        expect { ImageUploadJob.perform_later(@identifier, "param1", "param2") }.to(
           raise_error(RuntimeError, "unexpected error"))
         expect(JobNotifier::Job.count).to eq(1)
-        job = JobNotifier::Job.last
+        job = job_by_identifier(@identifier)
         expect(job.result).to eq("unknown")
         expect(job.status).to eq("failed")
       end

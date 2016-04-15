@@ -3,10 +3,7 @@ module JobNotifier
     extend ActiveSupport::Concern
 
     included do
-      attr_accessor :job_identifier
-
       def perform(*args)
-        self.job_identifier = args.shift
         result = perform_with_feedback(*args)
         save_success_feedback(result)
       rescue JobNotifier::Error::Validation => ex
@@ -26,9 +23,9 @@ module JobNotifier
 
       before_enqueue do |job|
         if job.respond_to?(:perform_with_feedback)
-          identifier = job.arguments.first
-          raise JobNotifier::Error::InvalidIdentifier if identifier.blank?
-          JobNotifier::Job.create!(decoded_identifier: identifier, job_id: job.job_id)
+          identifier = job.arguments.shift
+          raise JobNotifier::Error::InvalidIdentifier.new if identifier.blank?
+          JobNotifier::Job.create!(identifier: identifier, job_id: job.job_id)
         end
       end
     end
