@@ -20,7 +20,7 @@ RSpec.describe JobNotifier::Notifier do
       before do
         identifier = { email: "emilio@platan.us" }
         ImageUploadJob.perform_later(identifier, "param1", "param2")
-        @job = JobNotifier::Job.all_by_identifier(Digest::MD5.hexdigest(identifier.to_s)).first
+        @job = JobNotifier::Job.where(identifier: Digest::MD5.hexdigest(identifier.to_s)).first
       end
 
       it { expect(@job.job_id).not_to be_nil }
