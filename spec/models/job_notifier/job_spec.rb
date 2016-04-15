@@ -16,5 +16,15 @@ module JobNotifier
         expect(subject.all_by_identifier("unknown")).to be_empty
       end
     end
+
+    describe "#update_feedback", focus: true do
+      subject { JobNotifier::Job }
+      let!(:job) { create(:job_notifier_job, notified: true, job_id: "hd70oj") }
+      before { subject.update_feedback(job.job_id, "success", :finished) }
+
+      it { expect(job.reload.status).to eq("finished") }
+      it { expect(job.reload.notified).to be_falsey }
+      it { expect(job.reload.result).to eq("success") }
+    end
   end
 end

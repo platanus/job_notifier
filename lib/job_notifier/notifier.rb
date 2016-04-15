@@ -17,21 +17,11 @@ module JobNotifier
       end
 
       def save_error_feedback(error)
-        on_job_ctx do |job|
-          job.update_columns(result: error.to_s, status: :failed)
-        end
+        JobNotifier::Job.update_feedback(job_id, error, :failed)
       end
 
       def save_success_feedback(data)
-        on_job_ctx do |job|
-          job.update_columns(result: data.to_s, status: :finished)
-        end
-      end
-
-      def on_job_ctx(&block)
-        job = JobNotifier::Job.find_by(job_id: job_id)
-        return unless job
-        block.call(job)
+        JobNotifier::Job.update_feedback(job_id, data, :finished)
       end
 
       before_enqueue do |job|
