@@ -12,9 +12,8 @@ module JobNotifier
       self.identifier = self.class.encode_identifier(decoded_identifier) if decoded_identifier
     end
 
-    def self.job_by_identifier(decoded_identifier)
-      encoded_job_identifier = encode_identifier(decoded_identifier)
-      JobNotifier::Job.where(identifier: encoded_job_identifier).first
+    def self.all_by_identifier(encoded_job_identifier)
+      JobNotifier::Job.where(identifier: encoded_job_identifier)
     end
 
     def self.encode_identifier(identifier)
