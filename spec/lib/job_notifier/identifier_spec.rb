@@ -54,5 +54,27 @@ RSpec.describe JobNotifier::Identifier do
         expect(@user.job_identifier).to eq(identifier)
       end
     end
+
+    context "passing block to generate identifier" do
+      before do
+        class TestUser
+          include JobNotifier::Identifier
+          attr_accessor :email
+
+          indentify_by do |user|
+            p user
+            [user.class, user.email].join("~")
+          end
+        end
+
+        @user = TestUser.new
+        @user.email = "leandro@platan.us"
+      end
+
+      it "returns valid identifier" do
+        identifier = Digest::MD5.hexdigest("TestUser~leandro@platan.us")
+        expect(@user.job_identifier).to eq(identifier)
+      end
+    end
   end
 end
