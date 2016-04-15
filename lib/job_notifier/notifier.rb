@@ -29,7 +29,7 @@ module JobNotifier
       end
 
       def on_job_ctx(&block)
-        job = JobNotifier::Job.job_by_identifier(job_identifier)
+        job = JobNotifier::Job.find_by job_id: job_id
         return unless job
         block.call(job)
       end
@@ -38,7 +38,7 @@ module JobNotifier
         if job.respond_to?(:perform_with_feedback)
           identifier = job.arguments.first
           raise JobNotifier::Error::InvalidIdentifier if identifier.blank?
-          JobNotifier::Job.create!(decoded_identifier: identifier)
+          JobNotifier::Job.create!(decoded_identifier: identifier, job_id: job.job_id)
         end
       end
     end
