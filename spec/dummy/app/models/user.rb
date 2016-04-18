@@ -3,5 +3,5 @@ class User
 
   attr_accessor :id, :email
 
-  indentify_by :id, :email
+  identify_job_through :id, :email
 end

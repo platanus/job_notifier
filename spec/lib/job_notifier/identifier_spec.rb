@@ -4,7 +4,7 @@ RSpec.describe JobNotifier::Identifier do
   describe "#job_identifier" do
     before { Object.send(:remove_const, :TestUser) rescue nil }
 
-    context "when indentify_by is not executed" do
+    context "when identify_job_through is not executed" do
       before do
         class TestUser
           include JobNotifier::Identifier
@@ -24,7 +24,7 @@ RSpec.describe JobNotifier::Identifier do
         class TestUser
           include JobNotifier::Identifier
           attr_accessor :id, :email
-          indentify_by :id, :email
+          identify_job_through :id, :email
         end
 
         @user = TestUser.new
@@ -41,7 +41,7 @@ RSpec.describe JobNotifier::Identifier do
         class TestUser
           include JobNotifier::Identifier
           attr_accessor :id, :email
-          indentify_by :id, :email
+          identify_job_through :id, :email
         end
 
         @user = TestUser.new
@@ -61,8 +61,7 @@ RSpec.describe JobNotifier::Identifier do
           include JobNotifier::Identifier
           attr_accessor :email
 
-          indentify_by do |user|
-            p user
+          identify_job_through do |user|
             [user.class, user.email].join("~")
           end
         end

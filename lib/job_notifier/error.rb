@@ -8,7 +8,7 @@ module JobNotifier
 
     class MissingAttributes < Exception
       def initialize
-        super("you need to execute indentify_by method on host model")
+        super("you need to execute identify_job_through method on host model")
       end
     end
 

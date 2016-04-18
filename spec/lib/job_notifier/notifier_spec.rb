@@ -8,7 +8,7 @@ RSpec.describe JobNotifier::Notifier do
     class TestUser
       include JobNotifier::Identifier
       attr_accessor :email
-      indentify_by :email
+      identify_job_through :email
     end
 
     tu = TestUser.new

@@ -26,7 +26,7 @@ module JobNotifier
     end
 
     module ClassMethods
-      def indentify_by(*attrs, &block)
+      def identify_job_through(*attrs, &block)
         if block
           @job_identifier_proc = block
         else
