@@ -10,6 +10,11 @@ module JobNotifier
     initializer "initialize" do
       require_relative "./error"
       require_relative "./notifier"
+      require_relative "./identifier"
+
+      ActiveSupport.on_load :action_controller do
+        helper JobNotifier::ApplicationHelper
+      end
     end
   end
 end

@@ -15,10 +15,15 @@ ActiveRecord::Schema.define(version: 20160401185325) do
 
   create_table "job_notifier_jobs", force: :cascade do |t|
     t.string   "identifier"
+    t.string   "job_id"
     t.string   "status"
     t.text     "result"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "notified",   default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
+
+  add_index "job_notifier_jobs", ["identifier"], name: "index_job_notifier_jobs_on_identifier"
+  add_index "job_notifier_jobs", ["job_id"], name: "index_job_notifier_jobs_on_job_id"
 
 end
