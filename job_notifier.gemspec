@@ -7,14 +7,14 @@ require "job_notifier/version"
 Gem::Specification.new do |s|
   s.name        = "job_notifier"
   s.version     = JobNotifier::VERSION
-  s.authors     = ["Leandro Segovia"]
-  s.email       = ["ldlsegovia@gmail.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of JobNotifier."
-  s.description = "TODO: Description of JobNotifier."
+  s.authors     = ["Platanus", "Emilio Blanco", "Leandro Segovia"]
+  s.email       = ["rubygems@platan.us", "emilioeduardob@gmail.com", "ldlsegovia@gmail.com"]
+  s.homepage    = "https://github.com/platanus/job_notifier"
+  s.summary     = "Rails engine to persist job results and notify job status changes"
+  s.description = "Rails engine built on top on Active Job gem to persist job results and notify job status changes"
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = `git ls-files`.split($/).reject { |fn| fn.start_with? "spec" }
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency "rails", "~> 4.2.5.2"
