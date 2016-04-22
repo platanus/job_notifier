@@ -6,7 +6,7 @@
     JobNotifier.init = function() {
       var body = document.querySelector('body');
       JobNotifier.jobIdentifier = body.dataset.identifier;
-
+      JobNotifier.rootUrl = body.dataset.rootUrl;
       setInterval(JobNotifier.poll, 5000);
     };
 
@@ -14,7 +14,8 @@
       var oReq = new XMLHttpRequest();
       oReq.onload = JobNotifier.reqListener;
       oReq.onerror = JobNotifier.onError;
-      oReq.open('get', '/job_notifier/jobs.json?identifier=' + JobNotifier.jobIdentifier, true);
+      var url = JobNotifier.rootUrl + 'job_notifier/jobs.json?identifier=' + JobNotifier.jobIdentifier;
+      oReq.open('get', url, true);
       oReq.send();
     };
 
