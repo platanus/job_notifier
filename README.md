@@ -32,7 +32,7 @@ Run the installer:
 rails generate job_notifier:install
 ```
 
-The installer will copy `/config/initializers/job_notifier.rb`. There, you can change the default configuration.
+> The installer will copy `/config/initializers/job_notifier.rb`. There, you can change the default configuration.
 
 Then, include `notifier.js` where you go to use it. For example, in: `/app/assets/javascripts/application.js`
 
@@ -74,7 +74,7 @@ the jobs for `user` will be identified by this code: `"1b1bcc253675df5eb91603dbd
 
 ```html
 <!-- Something like this is what the previous code produces -->
-<body data-identifier="1b1bcc253675df5eb91603dbda06af11">
+<body data-identifier="1b1bcc253675df5eb91603dbda06af11" data-root-url="/">
 ```
 
 > I'm assuming you have a `current_user` instance of `User` class.
@@ -129,6 +129,21 @@ If this code `MyJob.perform_later(current_user.job_identifier, "lean", "leandro"
 
 - `result: "ERROR!!!"`
 - `state: "failed"`
+
+## Non Rails Client App
+
+If you are building an API or your client app is not part of the project you have installed this gem, you will need:
+
+- To include the `notifier.js` using this url: `http://your_app.platan.us/job_notifier/adapters/notifier`
+- To mimic the `job_identifier_for` functionality, passing `data-identifier` and `data-root-url`
+
+ ```html
+ <body data-identifier="1b1bcc253675df5eb91603dbda06af11" data-root-url="http://your_app.platan.us/">
+ ```
+
+ You can get the identifier executing in server side something like this: `@current_user.job_identifier` (Remember, I'm assuming you have a `@current_user` instance of `User` class that includes the `JobNotifier::Identifier` mixin).
+
+ The root url is your server url (where Job Notifier gem was installed).
 
 ## Contributing
 
