@@ -18,6 +18,13 @@ module JobNotifier
       end
     end
 
+    class InvalidAdapter < Exception
+      def initialize
+        file_names = JobNotifier::Adapters.names.join(", ")
+        super("The adapter must be one of: #{file_names}")
+      end
+    end
+
     class Validation < Exception
       attr_reader :error
 
