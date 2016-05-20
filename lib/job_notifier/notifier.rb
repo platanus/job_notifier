@@ -32,4 +32,4 @@ module JobNotifier
   end
 end
 
-ActiveJob::Base.include(JobNotifier::Notifier)
+ActiveJob::Base.send(:include, JobNotifier::Notifier)
