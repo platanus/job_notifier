@@ -16,13 +16,25 @@ It's a Rails engine built on top of [Active Job](https://github.com/rails/active
 
 ## Installation
 
-Add to your Gemfile...
+Add to your Gemfile:
 
 ```ruby
 gem "job_notifier"
 ```
 
-Include `notifier.js` in your `/my-app/app/assets/javascripts/application.js`
+```bash
+bundle install
+```
+
+Run the installer:
+
+```bash
+rails generate job_notifier:install
+```
+
+> The installer will copy `/config/initializers/job_notifier.rb`. There, you can change the default configuration.
+
+Then, include `notifier.js` where you go to use it. For example, in: `/app/assets/javascripts/application.js`
 
 ```javascript
 //= require job_notifier/notifier
@@ -59,15 +71,26 @@ the jobs for `user` will be identified by this code: `"1b1bcc253675df5eb91603dbd
 ```
 <body <%= job_identifier_for(@current_user) %>>
 ```
+
+```html
+<!-- Something like this is what the previous code produces -->
+<body data-identifier="1b1bcc253675df5eb91603dbda06af11" data-root-url="/">
+```
+
 > I'm assuming you have a `current_user` instance of `User` class.
 
 The previous code, takes the identifier from `@current_user` and sets a data attribute, on body tag, that will be used in somewhere of `notifier.js` to perform requests with a valid identifier.
 
-```html
-<body data-identifier="1b1bcc253675df5eb91603dbda06af11">
+To catch the response of polling requests, you can set a callback function:
+
+```javascript
+JobNotifier.onNotify = function(data) {
+  console.info('On notify', data);
+};
+
 ```
 
-Now, you are be able to get feedback of your jobs but, you don't have any. So, the **Third** step is to define a job.
+Now, you are be able to get feedback of your jobs but, you don't have any! so, the **Third** step is to define a job.
 
 ```ruby
 class MyJob < ActiveJob::Base
@@ -77,7 +100,7 @@ class MyJob < ActiveJob::Base
 end
 ```
 
-As you can see, the only difference with a regular ActiveJob's job is that you have `perform_with_feedback` method instead of `perform` method. Inside `perform_with_feedback` you need to return the "success response" of you job. And, to save the "error response", you need to raise a `JobNotifier::Error::Validation` exception. Let's see `MyService#run` method definition to make it clear.
+As you can see, the only difference with a regular ActiveJob's job is that you have `perform_with_feedback` method instead of `perform` method. Inside `perform_with_feedback` you need to return the "success response" of your job. And, to save the "error response", you need to raise a `JobNotifier::Error::Validation` exception. Let's see `MyService#run` method definition to make it clear.
 
 ```ruby
 class MyService
@@ -106,6 +129,21 @@ If this code `MyJob.perform_later(current_user.job_identifier, "lean", "leandro"
 
 - `result: "ERROR!!!"`
 - `state: "failed"`
+
+## Non Rails Client App
+
+If you are building an API or your client app is not part of the project you have installed this gem, you will need:
+
+- To include the `notifier.js` using this url: `http://your_app.platan.us/job_notifier/adapters/notifier`
+- To mimic the `job_identifier_for` functionality, passing `data-identifier` and `data-root-url`
+
+ ```html
+ <body data-identifier="1b1bcc253675df5eb91603dbda06af11" data-root-url="http://your_app.platan.us/">
+ ```
+
+ You can get the identifier executing in server side something like this: `@current_user.job_identifier` (Remember, I'm assuming you have a `@current_user` instance of `User` class that includes the `JobNotifier::Identifier` mixin).
+
+ The root url is your server url (where Job Notifier gem was installed).
 
 ## Contributing
 
