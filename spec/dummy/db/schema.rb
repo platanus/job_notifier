@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20160401185325) do
     t.string   "identifier"
     t.string   "job_id"
     t.string   "status"
+    t.string   "job_class"
     t.text     "result"
     t.boolean  "notified",   default: false
     t.datetime "created_at",                 null: false

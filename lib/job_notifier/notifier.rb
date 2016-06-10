@@ -25,7 +25,12 @@ module JobNotifier
         if job.respond_to?(:perform_with_feedback)
           identifier = job.arguments.shift
           raise JobNotifier::Error::InvalidIdentifier.new if identifier.blank?
-          JobNotifier::Job.create!(identifier: identifier, job_id: job.job_id)
+
+          JobNotifier::Job.create!(
+            identifier: identifier,
+            job_id: job.job_id,
+            job_class: self.class.name
+          )
         end
       end
     end

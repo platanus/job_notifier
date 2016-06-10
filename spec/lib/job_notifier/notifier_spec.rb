@@ -35,6 +35,7 @@ RSpec.describe JobNotifier::Notifier do
 
       it { expect(@job.job_id).not_to be_nil }
       it { expect(@job.notified).to be_falsey }
+      it { expect(@job.job_class).to eq("ImageUploadJob") }
     end
   end
 

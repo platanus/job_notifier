@@ -3,7 +3,7 @@ module JobNotifier
     def names
       dir = Engine.root.join("app", "assets", "javascripts", "job_notifier")
       files = Dir.entries(dir).select { |file| file.ends_with?(".js") }
-      file_names = files.map { |file| file[0..-4] }
+      files.map { |file| file[0..-4] }
     end
 
     def get_adapter_path(adapter_name)
