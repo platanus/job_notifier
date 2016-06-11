@@ -6,6 +6,11 @@
     JobNotifier.init = function() {
       var body = document.querySelector('body');
       JobNotifier.jobIdentifier = body.dataset.identifier;
+
+      if(!JobNotifier.jobIdentifier) {
+        return;
+      }
+
       JobNotifier.rootUrl = body.dataset.rootUrl;
       setInterval(JobNotifier.poll, 5000);
     };
