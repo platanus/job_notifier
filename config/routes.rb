@@ -1,4 +1,4 @@
 JobNotifier::Engine.routes.draw do
-  resources :jobs, only: [:index]
-  resources :adapters, only: [:show]
+  get ":identifier/jobs/pending", to: "jobs#index"
+  put ":identifier/jobs/notify", to: "jobs#update"
 end
