@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+### v1.0.0
+
+#### Added
+
+- Replace `GET /jobs` with `GET /:identifier/jobs/pending` and `PUT /:identifier/jobs/notify` to mark jobs as notified in a second step.
+
 ### v0.2.1
 
 #### Fixed
