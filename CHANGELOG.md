@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+### v1.1.0
+
+#### Added
+
+- Replace Rails::Rack::Logger class with custom logger to avoid noisy logs.
+
 ### v1.0.0
 
 #### Added
