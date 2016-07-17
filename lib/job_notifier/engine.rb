@@ -20,7 +20,9 @@ module JobNotifier
         helper(JobNotifier::ApplicationHelper)
       end
 
-      Rails.application.middleware.swap(Rails::Rack::Logger, JobNotifier::Logger)
+      Rails.application.middleware.swap(
+        Rails::Rack::Logger, Silencer::Logger, silence: [%r{\/job_notifier\/\w+\/jobs\/\w+.json}])
+      Rails.application.middleware.insert_before(Silencer::Logger, JobNotifier::Logger)
     end
   end
 end

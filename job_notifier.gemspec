@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 4.2", ">= 4.2.0"
   s.add_dependency "enumerize", "~> 1.0", "~> 1.0.0"
   s.add_dependency "colorize", "~> 0.7", ">= 0.7.7"
+  s.add_dependency "silencer", "1.0.0.rc3"
 
   s.add_development_dependency "pry"
   s.add_development_dependency "sqlite3"

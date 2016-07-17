@@ -1,22 +1,18 @@
 module JobNotifier
-  class Logger < Rails::Rack::Logger
-    def initialize(app, opts = {})
+  class Logger
+    def initialize(app)
       @app = app
-      @opts = opts
-      super
     end
 
     def call(env)
-      if env["PATH_INFO"] =~ %r{\/job_notifier\/\w+\/jobs\/\w+.json}
-        Rails.logger.silence do
-          response = @app.call(env)
-          log_jobs_info(response[2])
-          return response
-        end
-      end
-
-      super(env)
+      response = @app.call(env)
+      status = response[0]
+      return response if status != 200
+      log_jobs_info(response[2]) if env["PATH_INFO"] =~ %r{\/\w+\/jobs\/\w+.json}
+      response
     end
+
+    private
 
     def log_jobs_info(response)
       response.each do |resp|
@@ -28,7 +24,7 @@ module JobNotifier
     end
 
     def build_log_msg(result)
-      msg = ["[#{DateTime.now.strftime('%Y-%m-%d %H:%M:%S')}] UNNOTIFIED JOBS".light_blue]
+      msg = ["[#{DateTime.now.strftime('%Y-%m-%d %H:%M:%S')}] JOBS".light_blue]
       grouped_jobs = result.group_by { |job| job["status"].to_sym }
       load_job_status_msg(grouped_jobs, msg, :pending, :yellow)
       load_job_status_msg(grouped_jobs, msg, :finished, :green)

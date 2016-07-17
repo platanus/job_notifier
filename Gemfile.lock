@@ -5,6 +5,7 @@ PATH
       colorize (~> 0.7, >= 0.7.7)
       enumerize (~> 1.0.0, ~> 1.0)
       rails (~> 4.2, >= 4.2.0)
+      silencer (= 1.0.0.rc3)
 
 GEM
   remote: https://rubygems.org/
@@ -123,6 +124,7 @@ GEM
       rspec-mocks (~> 3.4.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
+    silencer (1.0.0.rc3)
     slop (3.6.0)
     sprockets (3.6.3)
       concurrent-ruby (~> 1.0)

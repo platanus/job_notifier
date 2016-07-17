@@ -1,6 +1,7 @@
 require "job_notifier/engine"
 require "enumerize"
 require "colorize"
+require "silencer"
 
 module JobNotifier
   extend self
