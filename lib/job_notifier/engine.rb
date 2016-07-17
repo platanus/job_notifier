@@ -14,10 +14,13 @@ module JobNotifier
       require_relative "./notifier"
       require_relative "./identifier"
       require_relative "./adapters"
+      require_relative "./logger"
 
       ActiveSupport.on_load :action_controller do
-        helper JobNotifier::ApplicationHelper
+        helper(JobNotifier::ApplicationHelper)
       end
+
+      Rails.application.middleware.swap(Rails::Rack::Logger, JobNotifier::Logger)
     end
   end
 end
