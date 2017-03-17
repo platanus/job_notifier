@@ -1,0 +1,14 @@
+language: ruby
+rvm:
+  - 2.3.1
+script:
+  - cd spec/dummy && RAILS_ENV=test bundle exec rake db:create db:migrate
+  - cd ../.. && bundle exec rspec spec
+deploy:
+  provider: rubygems
+  api_key:
+    secure: bCeyRAepiV3YsCQfwrvYgZyxm6ys1gHpRyZ1p7z8c0pYxnOzkvEJF1RDuuMwU6fo2AIQH2LqfhywfPM7NCq96P3lGqQhZmgTiiZN7603akUXdU12nx40KputjJv2DhiGtLGOv3Ju5FVgBGQtxopWhvdRB/uaAzEL71YI/TRxfaGedPD46cWYF0Vj+b2bxe5b7f06NKJ+niE0YFpAho/GVY3eTbyCzqKGVwdZcOAWXdLoIdfhUL/wLxWUXhYIuBpDun/WQM0Oe0AcWAXSl8whys7jl+R/WbWDyqTjyNID/bKg3vdRilULU8tg04s7jq+AqnjqQ4BOGjJNzvTdhLs+H3tPfljK/sJr7bmeDZLe4vxlgGUa6dlKtuKOXZE0nUuY0nG5aHTRy8Yd4QRAQX5i/qGj+WIhpRlQMP8LqlTnZfGvm+rKu+a6aaQIbYeTuqRtKzRDwq6ZDWWjkeTEUSjVuIcfY2ZuWHj2CWWpbQlwz4yBauqc7/7GTUKVrDZRxE1ljU7r3TS5vQ0k8k7Ot4fb5uUpZReEvBxhLedLdS3IDI9UCREg07t5BQ1WQ9IkDmkirXkwNkXhBbJRA2borUsUewy1xh9qvrrh2ZNHr4HhLy7gALdj0y2omo/gehWiZ5WHwTASF4KsXki13bgt8ABIcIqbCleBdh/JGeUsthlHygc=
+  gem: job_notifier
+  on:
+    tags: true
+    repo: platanus/job_notifier
