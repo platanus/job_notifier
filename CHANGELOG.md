@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+### Unreleased
+
+##### Added
+
+* Add Hound configuration.
+* Deploy with Travis CI
+* Configure coveralls
+
 ### v1.1.1
 
 #### Fixed
