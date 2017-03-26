@@ -1,4 +1,4 @@
-# Job Notifier [![Build Status](https://travis-ci.org/platanus/paperclip_attributes.svg?branch=master)](https://travis-ci.org/platanus/paperclip_attributes)
+# Job Notifier [![Gem Version](https://badge.fury.io/rb/job_notifier.svg)](https://badge.fury.io/rb/job_notifier) [![Build Status](https://travis-ci.org/platanus/paperclip_attributes.svg?branch=master)](https://travis-ci.org/platanus/paperclip_attributes) [![Coverage Status](https://coveralls.io/repos/github/platanus/job_notifier/badge.svg)](https://coveralls.io/github/platanus/job_notifier)
 
 It's a Rails engine built on top of [Active Job](https://github.com/rails/activejob) in order to **improve user experience related to background processes**. To achieve this goal, the gem allows us to:
 
