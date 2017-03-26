@@ -1,4 +1,4 @@
-# Job Notifier
+# Job Notifier [![Build Status](https://travis-ci.org/platanus/paperclip_attributes.svg?branch=master)](https://travis-ci.org/platanus/paperclip_attributes)
 
 It's a Rails engine built on top of [Active Job](https://github.com/rails/activejob) in order to **improve user experience related to background processes**. To achieve this goal, the gem allows us to:
 
