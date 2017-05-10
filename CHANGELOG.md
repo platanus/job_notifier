@@ -2,13 +2,19 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+### v1.2.1
+
+##### Changed
+
+- Enumerize dependency version more flexible.
+
 ### v1.2.0
 
 ##### Added
 
-* Add Hound configuration.
-* Deploy with Travis CI.
-* Configure coveralls.
+- Add Hound configuration.
+- Deploy with Travis CI.
+- Configure coveralls.
 
 ### v1.1.1
 
