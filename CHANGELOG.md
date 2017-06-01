@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+### Unreleased
+
+##### Changed
+
+- Avoid raising error with undefined verify_authenticity_token method
+
 ### v1.2.2
 
 ##### Changed
