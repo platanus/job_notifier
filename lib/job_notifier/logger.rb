@@ -18,6 +18,7 @@ module JobNotifier
       response.each do |resp|
         next if resp.blank?
         result = JSON.parse(resp)
+        result = result["jobs"] if result.is_a?(Hash)
         next if result.blank?
         puts build_log_msg(result)
       end

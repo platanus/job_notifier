@@ -40,6 +40,10 @@
     JobNotifier.onPendingJobsLoad = function() {
       var data = JSON.parse(this.responseText);
 
+      if (data.jobs) {
+        data = data.jobs;
+      }
+
       if(data.length === 0) {
         JobNotifier.findJobs();
         return;
