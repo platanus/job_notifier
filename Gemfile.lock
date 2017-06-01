@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    job_notifier (1.2.1)
+    job_notifier (1.2.2)
       colorize (>= 0.7.7)
       enumerize (>= 1.0)
       rails (>= 4.2.0)
