@@ -2,17 +2,17 @@
 
 It's a Rails engine built on top of [Active Job](https://github.com/rails/activejob) in order to **improve user experience related to background processes**. To achieve this goal, the gem allows us to:
 
-1. **Relate jobs with entities**
+- **Relate jobs with entities**
 
  Using [Active Job](https://github.com/rails/activejob), you can perform background jobs but, you can not relate them with, for example, a logged user. Job Notifier allows you to connect an entity with a job easily.
 
-1. **Persist job results**
+- **Persist job results**
 
  Using [Active Job](https://github.com/rails/activejob), you can run jobs in background but, you are not be able to store the result of those jobs. This is a desired behavior if you, for example, want to provide validation feedback to users.
 
-1. **Notify users when their jobs change state.**
+- **Notify users when their jobs change state.**
 
- Using [Active Job](https://github.com/rails/activejob), you can run jobs in background but, you lose a real time response. To bring a solution to this issue, Job Notifier, through polling technique,  gives you a way to know what's happening with your jobs.
+ Using [Active Job](https://github.com/rails/activejob), you can run jobs in background but, you lose a real time response. To bring a solution to this issue, Job Notifier, through polling technique, gives you a way to know what's happening with your jobs.
 
 ## Installation
 

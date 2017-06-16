@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+### Unreleased
+
+##### Added
+
+- Add silenced_log config option to disable silencer gem.
+
 ### v1.2.4
 
 ##### Fixed
@@ -12,7 +18,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ##### Changed
 
-- Avoid raising error with undefined verify_authenticity_token method
+- Avoid raising error with undefined verify_authenticity_token method.
 
 ### v1.2.2
 
@@ -73,4 +79,4 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### v0.1.0
 
-* Initial release.
+- Initial release.
