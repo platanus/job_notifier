@@ -12,12 +12,20 @@ module JobNotifier
       job.update_columns(result: data.to_s, status: status, notified: false)
     end
 
-    def self.unnotified_by_identifier(encoded_identifier)
-      JobNotifier::Job.where(identifier: encoded_identifier).where(notified: false)
+    def self.by_identifier(encoded_identifier)
+      where(identifier: encoded_identifier)
+    end
+    
+    def self.notified
+      where(notified: true)
+    end
+
+    def self.unnotified
+      where(notified: false)
     end
 
     def self.notify_by_identifier(encoded_identifier)
-      unnotified_by_identifier(encoded_identifier).update_all(notified: true)
+      by_identifier(encoded_identifier).unnotified.update_all(notified: true)
     end
   end
 end
