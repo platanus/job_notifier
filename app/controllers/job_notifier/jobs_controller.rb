@@ -3,11 +3,15 @@ module JobNotifier
     skip_before_action :verify_authenticity_token, raise: false
 
     def index
-      render json: Job.unnotified_by_identifier(params[:identifier])
+      jobs = Job.by_identifier(params[:identifier])
+      jobs = jobs.unnotified if params[:status] == "pending"
+      jobs = jobs.notified if params[:status] == "notified"
+      render json: jobs
     end
 
     def update
-      Job.notify_by_identifier(params[:identifier])
+      job = JobNotifier::Job.find_by!(id: params[:job_id], identifier: params[:identifier])
+      job.update_column(:notify, true)
       head :no_content
     end
   end
