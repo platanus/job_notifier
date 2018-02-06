@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+### Unreleased
+
+##### Changed
+
+- Use update_attributes instead of update_columns to change update_at attribute.
+
 ### v1.3.0
 
 ##### Added
