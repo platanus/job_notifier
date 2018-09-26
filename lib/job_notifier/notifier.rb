@@ -27,7 +27,7 @@ module JobNotifier
           raise JobNotifier::Error::InvalidIdentifier.new if identifier.blank?
 
           JobNotifier::Job.create!(
-            identifier: identifier,
+            identifier: (identifier.to_sym == :without_owner ? nil : identifier),
             job_id: job.job_id,
             job_class: self.class.name
           )

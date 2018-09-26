@@ -106,6 +106,23 @@ RSpec.describe JobNotifier::Notifier do
         expect(job.status).to eq("failed")
       end
     end
+
+    context "with no owner" do
+      before do
+        class ImageUploadJob < ActiveJob::Base
+          def perform_with_feedback
+            "photo loaded!"
+          end
+        end
+
+        ImageUploadJob.perform_later("without_owner")
+        @job = JobNotifier::Job.last
+      end
+
+      it { expect(@job.job_id).not_to be_nil }
+      it { expect(@job.identifier).to be_nil }
+      it { expect(@job.job_class).to eq("ImageUploadJob") }
+    end
   end
 
   context "without defining perform_with_feedback" do
