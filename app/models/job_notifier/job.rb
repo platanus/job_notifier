@@ -1,5 +1,5 @@
 module JobNotifier
-  class Job < ActiveRecord::Base
+  class Job < ApplicationRecord
     extend Enumerize
 
     STATUSES = [:pending, :finished, :failed]
@@ -9,7 +9,8 @@ module JobNotifier
     def self.update_feedback(job_id, data, status)
       job = JobNotifier::Job.find_by(job_id: job_id)
       return unless job
-      job.update_attributes(result: data.to_s, status: status, notified: false)
+
+      job.update(result: data.to_s, status: status, notified: false)
     end
 
     def self.unnotified_by_identifier(encoded_identifier)
