@@ -147,6 +147,15 @@ If you are building an API or your client app is not part of the project you hav
  You can get the identifier executing in server side something like this: `@current_user.job_identifier` (Remember, I'm assuming you have a `@current_user` instance of `User` class that includes the `JobNotifier::Identifier` mixin).
 
  The root url is your server url (where Job Notifier gem was installed).
+## Publishing
+
+On master/main branch...
+
+1. Change `VERSION` in `lib/job_notifier/version.rb`.
+2. Change `Unreleased` title to current version in `CHANGELOG.md`.
+3. Commit new release. For example: `Releasing v0.1.0`.
+4. Create tag. For example: `git tag v0.1.0`.
+5. Push tag. For example: `git push origin v0.1.0`.
 
 ## Contributing
 
