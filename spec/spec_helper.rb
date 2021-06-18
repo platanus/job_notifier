@@ -89,4 +89,6 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+  config.filter_run :focus
+  config.run_all_when_everything_filtered = true
 end

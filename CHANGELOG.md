@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
+### v2.0.0
+##### changed
+
+- Replace travis with CircleCI.
+- Update Dependencies to play nice with Rails 6.
 
 ### v1.5.0
 

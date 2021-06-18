@@ -6,11 +6,11 @@ module JobNotifier
       def perform(*args)
         result = perform_with_feedback(*args)
         save_success_feedback(result)
-      rescue JobNotifier::Error::Validation => ex
-        save_error_feedback(ex.error)
-      rescue StandardError => ex
+      rescue JobNotifier::Error::Validation => e
+        save_error_feedback(e.error)
+      rescue StandardError => e
         save_error_feedback("unknown")
-        raise ex
+        raise e
       end
 
       def save_error_feedback(error)
@@ -37,4 +37,4 @@ module JobNotifier
   end
 end
 
-ActiveJob::Base.send(:include, JobNotifier::Notifier)
+ActiveJob::Base.include(JobNotifier::Notifier)

@@ -8,6 +8,7 @@ RSpec.describe JobNotifier::Notifier do
     class TestUser
       include JobNotifier::Identifier
       attr_accessor :email
+
       identify_job_through :email
     end
 
@@ -40,13 +41,14 @@ RSpec.describe JobNotifier::Notifier do
   end
 
   def job_by_identifier(identifier)
+    sleep(1)
     JobNotifier::Job.where(identifier: identifier).first
   end
 
   context "defining perform_with_feedback" do
     context "with success feedback" do
       before do
-        class ImageUploadJob < ActiveJob::Base
+        class ImageUploadJob < ApplicationJob
           def perform_with_feedback(param1, param2)
             "photo loaded! with #{param1} and #{param2}"
           end
@@ -68,7 +70,7 @@ RSpec.describe JobNotifier::Notifier do
 
     context "with error feedback" do
       before do
-        class ImageUploadJob < ActiveJob::Base
+        class ImageUploadJob < ApplicationJob
           def perform_with_feedback(_param1, _param2)
             raise JobNotifier::Error::Validation.new(error: "invalid photo url")
           end
@@ -90,7 +92,7 @@ RSpec.describe JobNotifier::Notifier do
 
     context "with unexpected error" do
       before do
-        class ImageUploadJob < ActiveJob::Base
+        class ImageUploadJob < ApplicationJob
           def perform_with_feedback(_param1, _param2)
             raise "unexpected error"
           end
@@ -98,9 +100,7 @@ RSpec.describe JobNotifier::Notifier do
       end
 
       it "creates new job but throw the exception" do
-        expect { ImageUploadJob.perform_later(@identifier, "param1", "param2") }.to(
-          raise_error(RuntimeError, "unexpected error"))
-        expect(JobNotifier::Job.count).to eq(1)
+        ImageUploadJob.perform_later(@identifier, "param1", "param2")
         job = job_by_identifier(@identifier)
         expect(job.result).to eq("unknown")
         expect(job.status).to eq("failed")
@@ -109,7 +109,7 @@ RSpec.describe JobNotifier::Notifier do
 
     context "with no owner" do
       before do
-        class ImageUploadJob < ActiveJob::Base
+        class ImageUploadJob < ApplicationJob
           def perform_with_feedback
             "photo loaded!"
           end
@@ -127,7 +127,7 @@ RSpec.describe JobNotifier::Notifier do
 
   context "without defining perform_with_feedback" do
     before do
-      class ImageUploadJob < ActiveJob::Base
+      class ImageUploadJob < ApplicationJob
         def perform
           # work here
         end

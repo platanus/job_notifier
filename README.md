@@ -96,7 +96,7 @@ JobNotifier.onNotify = function(data) {
 Now, you are be able to get feedback of your jobs but, you don't have any! so, the **Third** step is to define a job.
 
 ```ruby
-class MyJob < ActiveJob::Base
+class MyJob < ApplicationJob
   def perform_with_feedback(param1, param2)
     MyService.run(param1, param2)
   end
