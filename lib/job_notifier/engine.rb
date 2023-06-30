@@ -16,10 +16,6 @@ module JobNotifier
       require_relative "./adapters"
       require_relative "./logger"
 
-      ActiveSupport.on_load :action_controller do
-        helper(JobNotifier::ApplicationHelper)
-      end
-
       if JobNotifier.silenced_log
         Rails.application.middleware.swap(
           Rails::Rack::Logger,
