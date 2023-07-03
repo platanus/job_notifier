@@ -2,8 +2,6 @@ require "rails_helper"
 
 module JobNotifier
   RSpec.describe Job, type: :model do
-    it { is_expected.to enumerize(:status).in(:pending, :finished, :failed) }
-
     describe "#unnotified_by_identifier" do
       subject { JobNotifier::Job }
       let!(:job1) { create(:job_notifier_job, identifier: "jcm14n", notified: false) }

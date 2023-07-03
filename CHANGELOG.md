@@ -1,7 +1,19 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
+
+### Unreleased
+
+##### Added
+
+* Add Ruby 3.1 and 3.2 support
+
+##### Removed
+
+* Remove Ruby 2.5 and 2.6 support
+
 ### v2.0.0
+
 ##### Changed
 
 - Replace travis with CircleCI.
